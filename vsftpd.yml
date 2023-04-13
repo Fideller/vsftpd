@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: vsftpd-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vsftpd
+  template:
+    metadata:
+      labels:
+        app: vsftpd
+    spec:
+      containers:
+        - name: vsftpd
+          image: docker.io/fideller/vsftpd:1.0
+          ports:
+            - containerPort: 20
+            - containerPort: 21
+          volumeMounts:
+            - name: ftp-data
+              mountPath: /var/lib/ftp
+      volumes:
+        - name: ftp-data
+          hostPath:
+            path: /var/FTP
