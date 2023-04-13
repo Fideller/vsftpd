@@ -25,3 +25,19 @@ spec:
         - name: ftp-data
           hostPath:
             path: /var/FTP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vsftpd-service
+spec:
+  selector:
+    app: vsftpd
+  ports:
+    - name: ftp
+      port: 21
+      targetPort: 21
+    - name: data
+      port: 20
+      targetPort: 20
+  type: ClusterIP
